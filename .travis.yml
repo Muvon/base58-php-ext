@@ -1,5 +1,5 @@
 env:
-  EXTNAME: base58
+  EXTNAME: base91
 
 language: php
 php:

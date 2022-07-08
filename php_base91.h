@@ -1,6 +1,6 @@
 /*
   +----------------------------------------------------------------------+
-  | Base58 PHP extension                                                 |
+  | Base91 PHP extension                                                 |
   +----------------------------------------------------------------------+
   | Copyright (c) 2020 Arnold Daniels                                    |
   +----------------------------------------------------------------------+
@@ -28,23 +28,23 @@
   +----------------------------------------------------------------------+
 */
 
-#ifndef PHP_BASE58_H
-#define PHP_BASE58_H 1
+#ifndef PHP_BASE91_H
+#define PHP_BASE91_H 1
 
-#define PHP_BASE58_VERSION "1.0.2"
-#define PHP_BASE58_EXTNAME "base58"
+#define PHP_BASE91_VERSION "1.0.2"
+#define PHP_BASE91_EXTNAME "base91"
 
 #ifdef PHP_WIN32
-# define PHP_BASE58_API __declspec(dllexport)
+# define PHP_BASE91_API __declspec(dllexport)
 #elif defined(__GNUC__) && __GNUC__ >= 4
-# define PHP_BASE58_API __attribute__ ((visibility("default")))
+# define PHP_BASE91_API __attribute__ ((visibility("default")))
 #else
-# define PHP_BASE58_API
+# define PHP_BASE91_API
 #endif
 
-static PHP_FUNCTION(base58_encode);
-static PHP_FUNCTION(base58_decode);
+static PHP_FUNCTION(base91_encode);
+static PHP_FUNCTION(base91_decode);
 
-extern zend_module_entry base58_module_entry;
+extern zend_module_entry base91_module_entry;
 
 #endif

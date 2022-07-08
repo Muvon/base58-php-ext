@@ -1,11 +1,11 @@
 // $Id$
 // vim:ft=javascript
 
-ARG_ENABLE("base58", "enable base58", "no");
+ARG_ENABLE("base91", "enable base91", "no");
 
-if (PHP_BASE58 != "no") {
-	EXTENSION("base58", "base58.c");
-	ADD_SOURCES(configure_module_dirname + "/lib", "libbase58.c", "base58");
-	AC_DEFINE('HAVE_BASE58', 1 , 'whether base58 is enabled');
-	PHP_INSTALL_HEADERS("ext/base58/", "php_base58.h");
+if (PHP_BASE91 != "no") {
+	EXTENSION("base91", "base91.c");
+	ADD_SOURCES(configure_module_dirname + "/lib", "libbase91.c", "base91");
+	AC_DEFINE('HAVE_BASE91', 1 , 'whether base91 is enabled');
+	PHP_INSTALL_HEADERS("ext/base91/", "php_base91.h");
 }

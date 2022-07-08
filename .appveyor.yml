@@ -8,7 +8,7 @@ branches:
   - /v\d*\.\d*\.\d*/
 
 environment:
-  EXTNAME: base58
+  EXTNAME: base91
 
   matrix:
     - PHP_VERSION: 7.2

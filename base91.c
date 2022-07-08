@@ -1,6 +1,6 @@
 /*
   +----------------------------------------------------------------------+
-  | Base58 PHP extension                                                 |
+  | Base91 PHP extension                                                 |
   +----------------------------------------------------------------------+
   | Copyright (c) 2020 Arnold Daniels                                    |
   +----------------------------------------------------------------------+
@@ -33,72 +33,72 @@
 #endif
 
 #include "php.h"
-#include "php_base58.h"
+#include "php_base91.h"
 #include "zend_exceptions.h"
 
-#include "lib/libbase58.h"
+#include "lib/libbase91.h"
 
-#if HAVE_BASE58
+#if HAVE_BASE91
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_base58_encode, 0, 0, 1)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_base91_encode, 0, 0, 1)
     ZEND_ARG_TYPE_INFO(0, data, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_base58_decode, 0, 0, 1)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_base91_decode, 0, 0, 1)
     ZEND_ARG_TYPE_INFO(0, data, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-static const zend_function_entry base58_functions[] = {
-    PHP_FE(base58_encode, arginfo_base58_encode)
-    PHP_FE(base58_decode, arginfo_base58_decode)
+static const zend_function_entry base91_functions[] = {
+    PHP_FE(base91_encode, arginfo_base91_encode)
+    PHP_FE(base91_decode, arginfo_base91_decode)
     PHP_FE_END
 };
 
-zend_module_entry base58_module_entry = {
+zend_module_entry base91_module_entry = {
     STANDARD_MODULE_HEADER,
-    PHP_BASE58_EXTNAME,
-    base58_functions,
+    PHP_BASE91_EXTNAME,
+    base91_functions,
     NULL,
     NULL,
     NULL,
     NULL,
     NULL,
-    PHP_BASE58_VERSION,
+    PHP_BASE91_VERSION,
     STANDARD_MODULE_PROPERTIES
 };
 
-#ifdef COMPILE_DL_BASE58
-ZEND_GET_MODULE(base58)
+#ifdef COMPILE_DL_BASE91
+ZEND_GET_MODULE(base91)
 #endif
 
-PHP_FUNCTION(base58_encode)
+PHP_FUNCTION(base91_encode)
 {
     zend_string *data;
 
-    zend_string *b58;
+    zend_string *b91;
 
     ZEND_PARSE_PARAMETERS_START(1, 1)
         Z_PARAM_STR(data)
     ZEND_PARSE_PARAMETERS_END();
 
-    b58 = zend_string_alloc((size_t)ceil(ZSTR_LEN(data) * 1.5) + 1, 0);
+    b91 = zend_string_alloc((size_t)ceil(ZSTR_LEN(data) * 1.5) + 1, 0);
 
-    if (!b58enc(ZSTR_VAL(b58), &ZSTR_LEN(b58), ZSTR_VAL(data), ZSTR_LEN(data))) {
-        zend_string_free(b58);
+    if (!b91enc(ZSTR_VAL(b91), &ZSTR_LEN(b91), ZSTR_VAL(data), ZSTR_LEN(data))) {
+        zend_string_free(b91);
 
-        php_error_docref(NULL, E_WARNING, "Failed to base58 encode string");
+        php_error_docref(NULL, E_WARNING, "Failed to base91 encode string");
         RETURN_FALSE;
     }
 
     /* Exclude ending '\0` from string length */
-    ZSTR_LEN(b58)--;
+    ZSTR_LEN(b91)--;
 
-    RETURN_STR(b58);
+    RETURN_STR(b91);
 }
 
-PHP_FUNCTION(base58_decode)
+PHP_FUNCTION(base91_decode)
 {
-    zend_string *b58;
+    zend_string *b91;
 
     char *data;
     size_t data_len;
@@ -106,21 +106,21 @@ PHP_FUNCTION(base58_decode)
     zend_string *result;
 
     ZEND_PARSE_PARAMETERS_START(1, 1)
-        Z_PARAM_STR(b58)
+        Z_PARAM_STR(b91)
     ZEND_PARSE_PARAMETERS_END();
 
-    data_len = ZSTR_LEN(b58);
+    data_len = ZSTR_LEN(b91);
     data = emalloc(data_len);
 
-    if (!b58tobin(data, &data_len, ZSTR_VAL(b58), ZSTR_LEN(b58))) {
+    if (!b91tobin(data, &data_len, ZSTR_VAL(b91), ZSTR_LEN(b91))) {
         efree(data);
 
-        php_error_docref(NULL, E_WARNING, "Failed to base58 decode string");
+        php_error_docref(NULL, E_WARNING, "Failed to base91 decode string");
         RETURN_FALSE;
     }
 
-    /* libbase58 starts at the end of the buffer, so skip preceding '\0' chars. */
-    result = zend_string_init(data + (ZSTR_LEN(b58) - data_len), data_len, 0);
+    /* libbase91 starts at the end of the buffer, so skip preceding '\0' chars. */
+    result = zend_string_init(data + (ZSTR_LEN(b91) - data_len), data_len, 0);
     efree(data);
 
     RETURN_STR(result);
